@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RunProgramMaker OAuth Callback</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px; font-family: Arial, sans-serif;">
+        <h2>Redirecting to RunProgramMaker...</h2>
+        <p>Please wait while we redirect you back to the app.</p>
+    </div>
+
+    <script>
+        // Extract the authorization code from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const state = urlParams.get('state');
+        const error = urlParams.get('error');
+        
+        if (error) {
+            // Handle error case
+            console.error('OAuth error:', error);
+            // Redirect to app with error
+            window.location.href = `runprogrammaker://oauth?error=${encodeURIComponent(error)}`;
+        } else if (code) {
+            // Success case - redirect to app with code
+            window.location.href = `runprogrammaker://oauth?code=${encodeURIComponent(code)}&state=${encodeURIComponent(state || '')}`;
+        } else {
+            // No code or error - redirect to app
+            window.location.href = 'runprogrammaker://oauth';
+        }
+    </script>
+</body>
+</html>
